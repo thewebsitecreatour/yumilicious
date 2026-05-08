@@ -1,18 +1,1346 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Yumilicious - Gujranwala</title>
-    <style>
-        body { background: #1a1a1a; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
-        h1 { color: #ffcc00; font-size: 50px; }
-        p { font-size: 20px; }
-        .btn { background: #e63946; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yumilicious — Gujranwala's Finest Fast Food</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #C0392B;
+    --crimson-dark: #922B21;
+    --crimson-light: #E74C3C;
+    --gold: #D4AC0D;
+    --gold-light: #F4D03F;
+    --cream: #FDF8F0;
+    --cream-dark: #F5ECD7;
+    --charcoal: #1A1A1A;
+    --charcoal-mid: #2C2C2C;
+    --smoke: #5A5A5A;
+    --white: #FFFFFF;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--charcoal);
+    color: var(--cream);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── CURSOR ── */
+  body { cursor: none; }
+  #cursor {
+    position: fixed; width: 12px; height: 12px; background: var(--gold);
+    border-radius: 50%; pointer-events: none; z-index: 9999;
+    transition: transform 0.15s ease, background 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  #cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1.5px solid rgba(212,172,13,0.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transition: transform 0.35s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    transform: translate(-50%, -50%);
+  }
+  a:hover ~ #cursor, button:hover ~ #cursor { transform: translate(-50%,-50%) scale(2.5); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(26,26,26,0.95), transparent);
+    backdrop-filter: blur(2px);
+    transition: background 0.4s;
+  }
+  nav.scrolled { background: rgba(26,26,26,0.98); backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(212,172,13,0.15); }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900; font-style: italic;
+    color: var(--gold); letter-spacing: -0.5px; text-decoration: none;
+  }
+  .nav-logo span { color: var(--cream); font-style: normal; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--cream); font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    opacity: 0.75; transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-cta {
+    background: var(--crimson); color: #fff; border: none;
+    padding: 0.65rem 1.6rem; border-radius: 2px; font-size: 0.82rem;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: none; transition: background 0.2s, transform 0.15s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--crimson-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  #hero {
+    height: 100vh; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--charcoal);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(192,57,43,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 50% at 20% 30%, rgba(212,172,13,0.08) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content {
+    position: relative; z-index: 2; text-align: center; padding: 0 2rem;
+    max-width: 900px;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid rgba(212,172,13,0.35);
+    padding: 0.4rem 1.2rem; border-radius: 1px; margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    font-weight: 900; line-height: 0.92;
+    color: var(--cream); margin-bottom: 0.2em;
+    opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-title .accent { color: var(--crimson); font-style: italic; }
+  .hero-title .gold { color: var(--gold); }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 300;
+    color: rgba(253,248,240,0.65); margin: 1.5rem auto 2.5rem;
+    max-width: 520px; line-height: 1.7;
+    opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.9s 0.9s forwards;
+  }
+  .btn-primary {
+    background: var(--crimson); color: #fff;
+    padding: 1rem 2.5rem; border: none; border-radius: 2px;
+    font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: none; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--crimson-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--cream);
+    padding: 1rem 2.5rem; border: 1px solid rgba(253,248,240,0.3);
+    border-radius: 2px; font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: none;
+    text-decoration: none; display: inline-block;
+    transition: border-color 0.2s, transform 0.15s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    opacity: 0; animation: fadeUp 1s 1.3s forwards;
+  }
+  .scroll-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,248,240,0.4); }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+  .hero-stats {
+    position: absolute; bottom: 3rem; right: 4rem;
+    display: flex; flex-direction: column; gap: 1.2rem;
+    opacity: 0; animation: fadeUp 1s 1.1s forwards;
+  }
+  .stat-item { text-align: right; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(253,248,240,0.45); }
+
+  /* ── MARQUEE ── */
+  .marquee-bar {
+    background: var(--crimson); padding: 0.8rem 0; overflow: hidden; white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block; animation: marqueeScroll 20s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.9); margin: 0 2rem;
+  }
+  .marquee-inner .dot { color: var(--gold-light); font-size: 1.2rem; vertical-align: middle; }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 7rem 0; }
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
+  .section-tag {
+    font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem; display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 700;
+    line-height: 1.1; color: var(--cream);
+  }
+  .section-title em { font-style: italic; color: var(--crimson); }
+  .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.5rem 0; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--charcoal-mid); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .about-visual {
+    position: relative; height: 520px;
+  }
+  .about-card {
+    position: absolute; border-radius: 2px; overflow: hidden;
+  }
+  .about-card-main {
+    inset: 0 3rem 0 0;
+    background: linear-gradient(135deg, #2a1510 0%, #3d1f16 40%, #1a0e0a 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8rem;
+  }
+  .about-card-accent {
+    width: 200px; height: 200px; bottom: -2rem; right: 0;
+    background: var(--crimson);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.3rem;
+  }
+  .about-card-accent .big { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: #fff; line-height: 1; }
+  .about-card-accent .small { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.75); }
+  .about-card-badge {
+    width: 130px; height: 130px; top: 1rem; left: 1rem;
+    background: var(--gold);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border-radius: 50%;
+  }
+  .about-card-badge .b-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--charcoal); line-height: 1; }
+  .about-card-badge .b-text { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(26,26,26,0.7); text-align: center; }
+  .about-text p {
+    font-size: 1.05rem; line-height: 1.8; color: rgba(253,248,240,0.7);
+    margin-bottom: 1.2rem; font-weight: 300;
+  }
+  .about-text strong { color: var(--cream); font-weight: 500; }
+  .highlights { display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; }
+  .highlight { display: flex; align-items: center; gap: 0.7rem; }
+  .h-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .h-text { font-size: 0.85rem; color: rgba(253,248,240,0.65); letter-spacing: 0.02em; }
+
+  /* ── MENU ── */
+  #menu { background: var(--charcoal); }
+  .menu-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 3.5rem; }
+  .menu-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .filter-btn {
+    background: transparent; border: 1px solid rgba(253,248,240,0.15);
+    color: rgba(253,248,240,0.55); padding: 0.5rem 1.2rem;
+    border-radius: 1px; font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: none;
+    transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--crimson); border-color: var(--crimson); color: #fff;
+  }
+  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+  .menu-item {
+    background: var(--charcoal-mid); padding: 2rem; position: relative;
+    transition: background 0.3s; overflow: hidden;
+  }
+  .menu-item::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--crimson);
+    transform: scaleY(0); transition: transform 0.3s; transform-origin: bottom;
+  }
+  .menu-item:hover { background: #252525; }
+  .menu-item:hover::before { transform: scaleY(1); }
+  .item-emoji { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+  .item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .item-desc { font-size: 0.83rem; color: rgba(253,248,240,0.5); line-height: 1.6; margin-bottom: 1.2rem; font-weight: 300; }
+  .item-footer { display: flex; align-items: center; justify-content: space-between; }
+  .item-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--gold); letter-spacing: 0.05em; }
+  .item-badge {
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.25rem 0.6rem; border-radius: 1px;
+  }
+  .badge-hot { background: rgba(192,57,43,0.2); color: var(--crimson-light); border: 1px solid rgba(192,57,43,0.3); }
+  .badge-new { background: rgba(212,172,13,0.15); color: var(--gold); border: 1px solid rgba(212,172,13,0.3); }
+  .badge-fan { background: rgba(255,255,255,0.05); color: rgba(253,248,240,0.5); border: 1px solid rgba(255,255,255,0.1); }
+
+  /* ── EXPERIENCE ── */
+  #experience {
+    background: linear-gradient(180deg, var(--crimson-dark) 0%, #6B1C12 100%);
+    padding: 6rem 0; position: relative; overflow: hidden;
+  }
+  #experience::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2l-2 2-34 34v-2zm4 4L80 0h2L44 42l-4-2zm4 0L80 4v2L48 42l-4-2zm4 0L80 8v2L52 42l-4-2zm4 0L80 12v2L56 42l-4-2zm4 0L80 16v2L60 42l-4-2zm4 0L80 20v2L64 42l-4-2zm4 0L80 24v2L68 42l-4-2zm4 0L80 28v2L72 42l-4-2zm4 0L80 32v2L76 42l-4-2zm4 0L80 36v2L80 40l-4 2zm4-4L80 40v2h-2l2-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .exp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; z-index: 1; }
+  .exp-item {
+    padding: 3rem 2rem; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .exp-item:last-child { border-right: none; }
+  .exp-icon { font-size: 2.8rem; margin-bottom: 1rem; }
+  .exp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem;
+  }
+  .exp-desc { font-size: 0.82rem; color: rgba(255,255,255,0.6); line-height: 1.6; font-weight: 300; }
+
+  /* ── REVIEWS ── */
+  #reviews { background: var(--charcoal-mid); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+  .review-card {
+    background: var(--charcoal); padding: 2rem; position: relative;
+  }
+  .review-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1.2rem; }
+  .review-text {
+    font-size: 0.9rem; line-height: 1.75; color: rgba(253,248,240,0.65);
+    font-style: italic; margin-bottom: 1.5rem; font-weight: 300;
+  }
+  .review-author { display: flex; align-items: center; gap: 0.8rem; }
+  .author-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--crimson); display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 600; color: #fff; flex-shrink: 0;
+  }
+  .author-name { font-size: 0.85rem; font-weight: 600; color: var(--cream); }
+  .author-meta { font-size: 0.72rem; color: rgba(253,248,240,0.4); }
+  .review-rating-bar {
+    background: var(--charcoal); padding: 3rem; border-left: 3px solid var(--gold);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .big-rating {
+    font-family: 'Bebas Neue', sans-serif; font-size: 7rem; color: var(--gold);
+    line-height: 1; margin-bottom: 0.3rem;
+  }
+  .rating-label { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(253,248,240,0.45); margin-bottom: 1.5rem; }
+  .rating-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem; }
+  .rating-num { font-size: 0.78rem; color: rgba(253,248,240,0.5); width: 10px; }
+  .rating-bar-bg { flex: 1; height: 3px; background: rgba(253,248,240,0.08); border-radius: 2px; overflow: hidden; }
+  .rating-bar-fill { height: 100%; background: var(--gold); border-radius: 2px; transition: width 1s ease; }
+  .rating-count { font-size: 0.72rem; color: rgba(253,248,240,0.35); width: 30px; text-align: right; }
+  .reviews-header-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5px; margin-bottom: 1.5px; }
+
+  /* ── LOCATION ── */
+  #location { background: var(--charcoal); }
+  .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .location-info { display: flex; flex-direction: column; gap: 1.8rem; }
+  .loc-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+  .loc-icon {
+    width: 44px; height: 44px; background: rgba(192,57,43,0.15);
+    border: 1px solid rgba(192,57,43,0.3); border-radius: 2px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+  }
+  .loc-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+  .loc-value { font-size: 0.95rem; color: var(--cream); font-weight: 400; line-height: 1.5; }
+  .loc-value a { color: var(--crimson-light); text-decoration: none; }
+  .map-placeholder {
+    height: 420px; background: var(--charcoal-mid);
+    border: 1px solid rgba(253,248,240,0.08); border-radius: 2px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem; position: relative; overflow: hidden;
+  }
+  .map-placeholder::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(253,248,240,0.03) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(253,248,240,0.03) 40px);
+  }
+  .map-pin { font-size: 3.5rem; position: relative; z-index: 1; animation: pinBounce 2s ease-in-out infinite; }
+  .map-text { font-size: 0.85rem; color: rgba(253,248,240,0.45); letter-spacing: 0.05em; position: relative; z-index: 1; text-align: center; }
+  .map-open-btn {
+    background: var(--crimson); color: #fff; border: none;
+    padding: 0.7rem 1.6rem; border-radius: 2px; font-size: 0.78rem;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: none; text-decoration: none; display: inline-block;
+    position: relative; z-index: 1; transition: background 0.2s;
+  }
+  .map-open-btn:hover { background: var(--crimson-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #111; border-top: 1px solid rgba(212,172,13,0.2);
+    padding: 4rem 0 2rem;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+  .footer-brand .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; font-style: italic; color: var(--gold);
+  }
+  .footer-brand p { font-size: 0.85rem; color: rgba(253,248,240,0.4); line-height: 1.7; margin-top: 0.8rem; font-weight: 300; max-width: 280px; }
+  .footer-social { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+  .social-btn {
+    width: 38px; height: 38px; border: 1px solid rgba(253,248,240,0.12);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 2px; text-decoration: none; color: rgba(253,248,240,0.4);
+    font-size: 0.8rem; font-weight: 600; transition: all 0.2s; cursor: none;
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-col h4 {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col ul a {
+    text-decoration: none; color: rgba(253,248,240,0.45);
+    font-size: 0.85rem; transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: var(--cream); }
+  .footer-bottom {
+    border-top: 1px solid rgba(253,248,240,0.06); padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 0.75rem; color: rgba(253,248,240,0.25); }
+  .footer-made { font-size: 0.75rem; color: rgba(253,248,240,0.2); }
+  .footer-made span { color: var(--crimson-light); }
+
+  /* ── MENU EXTRAS ── */
+  .menu-category-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 0.15em; color: var(--gold);
+    margin: 3rem 0 0.6rem; padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(212,172,13,0.2);
+  }
+  .pizza-sizes-bar {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;
+    font-size: 0.78rem; color: rgba(253,248,240,0.45);
+    margin-bottom: 1.2rem; align-items: center;
+  }
+  .pizza-sizes-bar .dot { color: var(--crimson); }
+  .menu-grid-1 { grid-template-columns: 1fr; }
+  .menu-item-featured { border-left: 3px solid var(--gold); }
+  .menu-item-deal { background: var(--charcoal-mid); border-top: 2px solid var(--crimson); }
+  .deal-tag {
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.12em;
+    color: var(--crimson); margin-bottom: 0.4rem;
+  }
+  .deal-price { color: var(--gold-light) !important; font-size: 1.6rem !important; }
+  .pizza-deals-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; margin: 0.5rem 0 1rem;
+  }
+  .pizza-deal-box {
+    background: var(--charcoal-mid); padding: 1.5rem 2rem;
+    border-top: 2px solid var(--gold);
+  }
+  .pd-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1rem;
+    letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.8rem;
+  }
+  .pd-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.85rem; color: rgba(253,248,240,0.65);
+    padding: 0.3rem 0; border-bottom: 1px solid rgba(253,248,240,0.06);
+  }
+  .pd-row span:last-child { color: var(--cream); font-weight: 500; }
+  .addons-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; margin: 0.5rem 0;
+  }
+  .addon-section { background: var(--charcoal-mid); padding: 1.5rem; }
+  .addon-title {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.8rem;
+  }
+  .addon-row {
+    display: flex; justify-content: space-between; gap: 1rem;
+    font-size: 0.78rem; color: rgba(253,248,240,0.55);
+    padding: 0.25rem 0; border-bottom: 1px solid rgba(253,248,240,0.05); flex-wrap: wrap;
+  }
+  .addon-row span:first-child { color: rgba(253,248,240,0.8); flex-shrink: 0; }
+  @media (max-width: 1024px) {
+    .pizza-deals-grid, .addons-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── ORDER FLOAT ── */
+  .order-float {
+    position: fixed; bottom: 2.5rem; right: 2.5rem; z-index: 90;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .order-float.visible { opacity: 1; transform: translateY(0); }
+  .order-float-btn {
+    background: var(--crimson); color: #fff;
+    padding: 0.85rem 1.8rem; border-radius: 2px; font-size: 0.82rem;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: none; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+    box-shadow: 0 8px 32px rgba(192,57,43,0.4);
+    transition: background 0.2s, transform 0.15s;
+  }
+  .order-float-btn:hover { background: var(--crimson-light); transform: translateY(-2px); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.7); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+  @keyframes pinBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 1.5rem 2rem; }
+    .nav-links { display: none; }
+    .section-inner { padding: 0 2rem; }
+    .about-grid, .location-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-visual { height: 320px; }
+    .menu-grid { grid-template-columns: repeat(2, 1fr); }
+    .exp-grid { grid-template-columns: repeat(2, 1fr); }
+    .reviews-header-grid { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .hero-stats { display: none; }
+  }
+  @media (max-width: 640px) {
+    .menu-grid { grid-template-columns: 1fr; }
+    .exp-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-    <h1>Yumilicious</h1>
-    <p>Gujranwala's Finest - Flavours Worth Craving</p>
-    <br><br>
-    <a href="#" class="btn">EXPLORE OUR MENU</a>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Yumili<span>cious</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#location">Find Us</a></li>
+  </ul>
+  <a href="tel:+923160490499" class="nav-cta">Call to Order</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-tag">★ Gujranwala's Finest · People's Colony</span>
+    <h1 class="hero-title">
+      Flavours<br>
+      <span class="accent">Worth</span> <span class="gold">Craving</span>
+    </h1>
+    <p class="hero-sub">
+      Handcrafted pizzas, loaded fries, juicy burgers & more — made fresh, served hot, loved by thousands.
+    </p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Explore Our Menu</a>
+      <a href="tel:+923160490499" class="btn-outline">Order by Phone</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">4.5★</div>
+      <div class="stat-label">Google Rating</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">299+</div>
+      <div class="stat-label">Happy Reviews</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Rs 2K</div>
+      <div class="stat-label">Avg Per Person</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span>Malai Boti Pizza</span><span class="dot">◆</span>
+    <span>Loaded Fries</span><span class="dot">◆</span>
+    <span>Doner Pizza</span><span class="dot">◆</span>
+    <span>Zingster Burger</span><span class="dot">◆</span>
+    <span>Chicken Grill Wrap</span><span class="dot">◆</span>
+    <span>Crispy Wings</span><span class="dot">◆</span>
+    <span>Crown Crust Pizza</span><span class="dot">◆</span>
+    <span>Mighty Zingster</span><span class="dot">◆</span>
+    <span>Injected Fried Chicken</span><span class="dot">◆</span>
+    <span>Kabab Crust Pizza</span><span class="dot">◆</span>
+    <span>Yummy Special Platter</span><span class="dot">◆</span>
+    <span>Mint Margarita</span><span class="dot">◆</span>
+    <span>Malai Boti Pizza</span><span class="dot">◆</span>
+    <span>Loaded Fries</span><span class="dot">◆</span>
+    <span>Doner Pizza</span><span class="dot">◆</span>
+    <span>Zingster Burger</span><span class="dot">◆</span>
+    <span>Chicken Grill Wrap</span><span class="dot">◆</span>
+    <span>Crispy Wings</span><span class="dot">◆</span>
+    <span>Crown Crust Pizza</span><span class="dot">◆</span>
+    <span>Mighty Zingster</span><span class="dot">◆</span>
+    <span>Injected Fried Chicken</span><span class="dot">◆</span>
+    <span>Kabab Crust Pizza</span><span class="dot">◆</span>
+    <span>Yummy Special Platter</span><span class="dot">◆</span>
+    <span>Mint Margarita</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-card about-card-main">🍕</div>
+        <div class="about-card about-card-accent">
+          <span class="big">4.5</span>
+          <span class="small">Google Stars</span>
+        </div>
+        <div class="about-card about-card-badge">
+          <span class="b-num">299</span>
+          <span class="b-text">Reviews</span>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <span class="section-tag">Our Story</span>
+        <h2 class="section-title">Born in<br><em>People's Colony</em><br>for the People</h2>
+        <div class="divider"></div>
+        <p>Tucked in the heart of <strong>People's Colony, Gujranwala</strong>, Yumilicious was built on one simple belief — great food should make you feel something. Every slice, every bite, every crunch.</p>
+        <p>From our signature <strong>Malai Boti Pizza</strong> dripping with creamy cheese to our perfectly seasoned <strong>Loaded Fries</strong> — we craft each dish with premium ingredients and passion.</p>
+        <p>Walk in, order in, or get it delivered. The experience stays the same: <strong>unforgettably delicious.</strong></p>
+        <div class="highlights">
+          <div class="highlight"><div class="h-dot"></div><span class="h-text">Dine-in Available</span></div>
+          <div class="highlight"><div class="h-dot"></div><span class="h-text">Takeout & Delivery</span></div>
+          <div class="highlight"><div class="h-dot"></div><span class="h-text">Opens at 3 PM Daily</span></div>
+          <div class="highlight"><div class="h-dot"></div><span class="h-text">Rs 2,000–3,000/person</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="exp-grid">
+      <div class="exp-item reveal">
+        <div class="exp-icon">🔥</div>
+        <div class="exp-title">Made to Order</div>
+        <div class="exp-desc">Every dish is freshly prepared when you order — no reheated shortcuts here.</div>
+      </div>
+      <div class="exp-item reveal reveal-delay-1">
+        <div class="exp-icon">🏆</div>
+        <div class="exp-title">Premium Ingredients</div>
+        <div class="exp-desc">We source quality meats, real cheese, and fresh toppings for every single order.</div>
+      </div>
+      <div class="exp-item reveal reveal-delay-2">
+        <div class="exp-icon">⚡</div>
+        <div class="exp-title">Fast Service</div>
+        <div class="exp-desc">Our team prides itself on quick, friendly service — you won't wait long for greatness.</div>
+      </div>
+      <div class="exp-item reveal reveal-delay-3">
+        <div class="exp-icon">🛵</div>
+        <div class="exp-title">Easy Delivery</div>
+        <div class="exp-desc">Can't come to us? We come to you — serving Gujranwala with hot, fresh delivery.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-inner">
+    <div class="menu-header">
+      <div class="reveal">
+        <span class="section-tag">What We Serve</span>
+        <h2 class="section-title">Our <em>Full</em> Menu</h2>
+      </div>
+      <div class="menu-filters reveal reveal-delay-1">
+        <button class="filter-btn active" onclick="filterMenu('all', this)">All</button>
+        <button class="filter-btn" onclick="filterMenu('pizza', this)">🍕 Pizza</button>
+        <button class="filter-btn" onclick="filterMenu('burgers', this)">🍔 Burgers</button>
+        <button class="filter-btn" onclick="filterMenu('wings', this)">🍗 Wings</button>
+        <button class="filter-btn" onclick="filterMenu('sides', this)">🍟 Sides</button>
+        <button class="filter-btn" onclick="filterMenu('wraps', this)">🌯 Wraps</button>
+        <button class="filter-btn" onclick="filterMenu('deals', this)">🔥 Deals</button>
+        <button class="filter-btn" onclick="filterMenu('drinks', this)">🥤 Drinks</button>
+      </div>
+    </div>
+
+    <!-- PIZZA CATEGORIES -->
+    <div class="menu-category-label reveal" data-cat-label="pizza">🍕 OLD SCHOOL PIZZAS</div>
+    <div class="pizza-sizes-bar reveal" data-cat-label="pizza">
+      <span>Small 6" — Rs 550</span><span class="dot">·</span>
+      <span>Medium 9" — Rs 1,099</span><span class="dot">·</span>
+      <span>Large 12" — Rs 1,550</span><span class="dot">·</span>
+      <span>X-Large 12" — Rs 2,290</span>
+    </div>
+    <div class="menu-grid" id="menu-grid">
+      <div class="menu-item reveal" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Chicken Tikka Pizza</div>
+        <div class="item-desc">Smoky chicken tikka, melty cheese, and bold desi flavor on every slice.</div>
+        <div class="item-footer"><span class="item-price">From Rs 550</span><span class="item-badge badge-hot">🔥 Desi Fave</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Creamy Melt Pizza</div>
+        <div class="item-desc">A rich, cheesy pizza loaded with creamy flavor in every bite.</div>
+        <div class="item-footer"><span class="item-price">From Rs 550</span><span class="item-badge badge-fan">⭐ Fan Fave</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Fajita Pizza</div>
+        <div class="item-desc">Topped with juicy Fajita chicken and bold spices for a zesty taste.</div>
+        <div class="item-footer"><span class="item-price">From Rs 550</span><span class="item-badge badge-hot">🔥 Popular</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Creamy Tikka Pizza</div>
+        <div class="item-desc">A delicious blend of creamy sauce and tender chicken tikka goodness.</div>
+        <div class="item-footer"><span class="item-price">From Rs 550</span><span class="item-badge badge-new">✦ Signature</span></div>
+      </div>
+      <div class="menu-item reveal" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Chicken Supreme Pizza</div>
+        <div class="item-desc">Loaded with flavorful chicken and hearty toppings for the ultimate bite.</div>
+        <div class="item-footer"><span class="item-price">From Rs 550</span><span class="item-badge badge-fan">⭐ Supreme</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Chicken Mexican Pizza</div>
+        <div class="item-desc">A spicy chicken pizza packed with Mexican-inspired flavor and cheesy delight.</div>
+        <div class="item-footer"><span class="item-price">From Rs 550</span><span class="item-badge badge-hot">🌶️ Spicy</span></div>
+      </div>
+    </div>
+
+    <!-- BLOCKBUSTER PIZZAS -->
+    <div class="menu-category-label reveal" data-cat-label="pizza">🍕 BLOCK BUSTER PIZZAS</div>
+    <div class="pizza-sizes-bar reveal" data-cat-label="pizza">
+      <span>Small 6" — Rs 600</span><span class="dot">·</span>
+      <span>Medium 9" — Rs 1,199</span><span class="dot">·</span>
+      <span>Large 12" — Rs 1,750</span><span class="dot">·</span>
+      <span>X-Large 12" — Rs 2,450</span>
+    </div>
+    <div class="menu-grid menu-grid-2" id="menu-grid-bb">
+      <div class="menu-item reveal" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Yumilicious Special Pizza</div>
+        <div class="item-desc">A flavor-packed special loaded with delicious toppings and cheesy goodness.</div>
+        <div class="item-footer"><span class="item-price">From Rs 600</span><span class="item-badge badge-hot">🔥 House Special</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Double Cheese Pizza</div>
+        <div class="item-desc">Twice the cheese, twice the melt, and twice the satisfaction.</div>
+        <div class="item-footer"><span class="item-price">From Rs 600</span><span class="item-badge badge-fan">⭐ Cheese Lover</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Malai Boti Pizza</div>
+        <div class="item-desc">Creamy malai boti flavor layered with cheese for a rich, tasty bite.</div>
+        <div class="item-footer"><span class="item-price">From Rs 600</span><span class="item-badge badge-hot">🔥 Best Seller</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Kabab Crust Pizza</div>
+        <div class="item-desc">A flavorful pizza with a juicy kabab-filled crust and cheesy topping.</div>
+        <div class="item-footer"><span class="item-price">From Rs 600</span><span class="item-badge badge-new">✦ Unique</span></div>
+      </div>
+      <div class="menu-item reveal" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Crown Crust Pizza</div>
+        <div class="item-desc">A royal treat with a stuffed crown crust and rich, satisfying flavor.</div>
+        <div class="item-footer"><span class="item-price">From Rs 600</span><span class="item-badge badge-fan">👑 Royal</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Crispy Twist Pizza <span style="font-size:0.6rem;color:var(--gold);"> NEW</span></div>
+        <div class="item-desc">A crunchy, cheesy pizza with a fun twist in every bite.</div>
+        <div class="item-footer"><span class="item-price">From Rs 600</span><span class="item-badge badge-new">✨ New</span></div>
+      </div>
+    </div>
+
+    <!-- SHOWSTOPPER -->
+    <div class="menu-category-label reveal" data-cat-label="pizza">🍕 SHOWSTOPPER — DONER PIZZA</div>
+    <div class="menu-grid menu-grid-1" id="menu-grid-show">
+      <div class="menu-item menu-item-featured reveal" data-cat="pizza">
+        <span class="item-emoji">🍕</span>
+        <div class="item-name">Doner Pizza</div>
+        <div class="item-desc">A delicious fusion of tender doner, rich sauce, and cheesy pizza goodness. Available in Medium (Rs 1,400), Large (Rs 1,950), X-Large (Rs 2,650).</div>
+        <div class="item-footer"><span class="item-price">From Rs 1,400</span><span class="item-badge badge-hot">🔥 Showstopper</span></div>
+      </div>
+    </div>
+
+    <!-- BURGERS -->
+    <div class="menu-category-label reveal" data-cat-label="burgers">🍔 BURGERS</div>
+    <div class="menu-grid" id="menu-grid-burgers">
+      <div class="menu-item reveal" data-cat="burgers">
+        <span class="item-emoji">🍔</span>
+        <div class="item-name">Patty Burger</div>
+        <div class="item-desc">Tender chicken patty layered with lettuce and mayo for a simple, satisfying bite.</div>
+        <div class="item-footer"><span class="item-price">Rs 320</span><span class="item-badge badge-fan">⭐ Classic</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="burgers">
+        <span class="item-emoji">🍔</span>
+        <div class="item-name">Zingster</div>
+        <div class="item-desc">Golden crunchy chicken, fresh lettuce, and signature sauce packed inside a soft bun.</div>
+        <div class="item-footer"><span class="item-price">Rs 440</span><span class="item-badge badge-hot">🔥 Crunchy</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="burgers">
+        <span class="item-emoji">🍔</span>
+        <div class="item-name">Grill Burger</div>
+        <div class="item-desc">Smoky grilled patty layered with fresh veggies and signature sauce for a rich flavor.</div>
+        <div class="item-footer"><span class="item-price">Rs 650</span><span class="item-badge badge-fan">⭐ Smoky</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="burgers">
+        <span class="item-emoji">🍔</span>
+        <div class="item-name">Mighty Zingster</div>
+        <div class="item-desc">A powerful combo of two crunchy zinger fillets, melted cheese, and signature sauce.</div>
+        <div class="item-footer"><span class="item-price">Rs 680</span><span class="item-badge badge-hot">🔥 Double Power</span></div>
+      </div>
+      <div class="menu-item reveal" data-cat="burgers">
+        <span class="item-emoji">🍔</span>
+        <div class="item-name">Chicken Fillet</div>
+        <div class="item-desc">Crispy chicken fillet with fresh lettuce and creamy mayo in a soft toasted bun.</div>
+        <div class="item-footer"><span class="item-price">Rs 650</span><span class="item-badge badge-new">✦ Crispy</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="burgers">
+        <span class="item-emoji">🍔</span>
+        <div class="item-name">Yummy Tender</div>
+        <div class="item-desc">Crispy chicken fillet with fresh lettuce and creamy mayo in a soft toasted bun.</div>
+        <div class="item-footer"><span class="item-price">Rs 550</span><span class="item-badge badge-fan">⭐ Tender</span></div>
+      </div>
+    </div>
+
+    <!-- WINGS -->
+    <div class="menu-category-label reveal" data-cat-label="wings">🍗 HOT WINGS</div>
+    <div class="menu-grid" id="menu-grid-wings">
+      <div class="menu-item reveal" data-cat="wings">
+        <span class="item-emoji">🍗</span>
+        <div class="item-name">Crispy Wings</div>
+        <div class="item-desc">Perfectly crispy on the outside, juicy on the inside. The classic wing experience.</div>
+        <div class="item-footer"><span class="item-price">5pcs Rs 430 · 10pcs Rs 799</span><span class="item-badge badge-hot">🔥 Crispy</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="wings">
+        <span class="item-emoji">🍗</span>
+        <div class="item-name">Garlic Mayo Wings</div>
+        <div class="item-desc">Tossed in rich garlic mayo sauce — addictively savory and golden.</div>
+        <div class="item-footer"><span class="item-price">5pcs Rs 430 · 10pcs Rs 799</span><span class="item-badge badge-fan">⭐ Garlic</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="wings">
+        <span class="item-emoji">🍗</span>
+        <div class="item-name">Red Hot Wings</div>
+        <div class="item-desc">For the heat seekers — coated in fiery red hot sauce that packs a punch.</div>
+        <div class="item-footer"><span class="item-price">5pcs Rs 430 · 10pcs Rs 790</span><span class="item-badge badge-hot">🌶️ Fiery</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="wings">
+        <span class="item-emoji">🍗</span>
+        <div class="item-name">Oven Baked Wings</div>
+        <div class="item-desc">Slow oven-baked to juicy perfection with bold seasoning throughout.</div>
+        <div class="item-footer"><span class="item-price">5pcs Rs 430 · 10pcs Rs 799</span><span class="item-badge badge-new">✦ Baked</span></div>
+      </div>
+      <div class="menu-item reveal" data-cat="wings">
+        <span class="item-emoji">🍗</span>
+        <div class="item-name">Chicken Nuggets</div>
+        <div class="item-desc">Golden, bite-sized nuggets — tender inside with a satisfying crunch outside.</div>
+        <div class="item-footer"><span class="item-price">5pcs Rs 300 · 10pcs Rs 570</span><span class="item-badge badge-fan">⭐ Nuggets</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="wings">
+        <span class="item-emoji">🍗</span>
+        <div class="item-name">Chicken Strips</div>
+        <div class="item-desc">Long, crispy strips of chicken breast — great for dipping in any of our sauces.</div>
+        <div class="item-footer"><span class="item-price">5pcs Rs 499 · 10pcs Rs 949</span><span class="item-badge badge-hot">🔥 Strips</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="wings">
+        <span class="item-emoji">🍗</span>
+        <div class="item-name">Chicken Poppers (12pcs)</div>
+        <div class="item-desc">Twelve little pops of cheesy, spicy chicken goodness in every box.</div>
+        <div class="item-footer"><span class="item-price">Rs 599</span><span class="item-badge badge-new">✦ Poppers</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="wings">
+        <span class="item-emoji">🍗</span>
+        <div class="item-name">Injected Fried Chicken</div>
+        <div class="item-desc">Marinated and injected with bold flavor, then fried to golden perfection. Extra bun Rs 50.</div>
+        <div class="item-footer"><span class="item-price">2pcs Rs 550 · 3pcs Rs 800 · 5pcs Rs 1,250</span><span class="item-badge badge-hot">🔥 Juicy</span></div>
+      </div>
+    </div>
+
+    <!-- SIDES & APPETIZERS -->
+    <div class="menu-category-label reveal" data-cat-label="sides">🍟 APPETIZERS & SIDES</div>
+    <div class="menu-grid" id="menu-grid-sides">
+      <div class="menu-item reveal" data-cat="sides">
+        <span class="item-emoji">🍟</span>
+        <div class="item-name">French Fries</div>
+        <div class="item-desc">Classic golden fries, perfectly salted and always satisfying.</div>
+        <div class="item-footer"><span class="item-price">Rs 300</span><span class="item-badge badge-fan">⭐ Classic</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="sides">
+        <span class="item-emoji">🍟</span>
+        <div class="item-name">Garlic Mayo Fries</div>
+        <div class="item-desc">Crispy fries drizzled with creamy garlic mayo — a match made in heaven.</div>
+        <div class="item-footer"><span class="item-price">Rs 350</span><span class="item-badge badge-hot">🔥 Garlicky</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="sides">
+        <span class="item-emoji">🍟</span>
+        <div class="item-name">Masala Fries</div>
+        <div class="item-desc">Fries tossed in our house masala blend — desi spice meets crispy fries.</div>
+        <div class="item-footer"><span class="item-price">Rs 350</span><span class="item-badge badge-new">🌶️ Desi</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="sides">
+        <span class="item-emoji">🍟</span>
+        <div class="item-name">Yummy Saucy Fries</div>
+        <div class="item-desc">Loaded with our signature sauce — saucy, savory and absolutely addictive.</div>
+        <div class="item-footer"><span class="item-price">Rs 750</span><span class="item-badge badge-fan">⭐ Saucy</span></div>
+      </div>
+      <div class="menu-item reveal" data-cat="sides">
+        <span class="item-emoji">🍟</span>
+        <div class="item-name">Loaded Fries</div>
+        <div class="item-desc">Golden fries smothered with toppings, cheese and sauces — fully loaded!</div>
+        <div class="item-footer"><span class="item-price">Rs 770</span><span class="item-badge badge-hot">🔥 Loaded!</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="sides">
+        <span class="item-emoji">🧀</span>
+        <div class="item-name">Chicken Cheese Stick</div>
+        <div class="item-desc">Crispy chicken coated sticks oozing with melted cheese — great as a starter.</div>
+        <div class="item-footer"><span class="item-price">Rs 820</span><span class="item-badge badge-new">✦ Cheesy</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="sides">
+        <span class="item-emoji">🌀</span>
+        <div class="item-name">Spin Roll</div>
+        <div class="item-desc">Crispy rolled snacks packed with flavor. Available as 3pcs or 6pcs.</div>
+        <div class="item-footer"><span class="item-price">3pcs Rs 420 · 6pcs Rs 770</span><span class="item-badge badge-fan">⭐ Crispy</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="sides">
+        <span class="item-emoji">🍱</span>
+        <div class="item-name">Yummy Special Platter</div>
+        <div class="item-desc">3pcs Spin Roll, 5pcs Oven Baked Wings, Fries & Dip — the ultimate sharing starter.</div>
+        <div class="item-footer"><span class="item-price">Rs 850</span><span class="item-badge badge-hot">🔥 Sharing</span></div>
+      </div>
+      <div class="menu-item reveal" data-cat="sides">
+        <span class="item-emoji">🍝</span>
+        <div class="item-name">Alfredo Baked Pasta</div>
+        <div class="item-desc">Creamy Alfredo sauce baked over pasta — rich, hearty, and comforting.</div>
+        <div class="item-footer"><span class="item-price">Rs 820</span><span class="item-badge badge-new">✦ Pasta</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="sides">
+        <span class="item-emoji">🍝</span>
+        <div class="item-name">Yumilicious Special Pasta</div>
+        <div class="item-desc">Our chef's special pasta creation — bold flavors you won't find anywhere else.</div>
+        <div class="item-footer"><span class="item-price">Rs 800</span><span class="item-badge badge-fan">⭐ Special</span></div>
+      </div>
+    </div>
+
+    <!-- WRAPS -->
+    <div class="menu-category-label reveal" data-cat-label="wraps">🌯 WRAPSTER & ROLLS</div>
+    <div class="menu-grid" id="menu-grid-wraps">
+      <div class="menu-item reveal" data-cat="wraps">
+        <span class="item-emoji">🌯</span>
+        <div class="item-name">Twister Wrap</div>
+        <div class="item-desc">Grilled chicken, fresh veggies and sauce twisted in a soft wrap.</div>
+        <div class="item-footer"><span class="item-price">Rs 670</span><span class="item-badge badge-hot">🔥 Twisted</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="wraps">
+        <span class="item-emoji">🌯</span>
+        <div class="item-name">Grill Wrap</div>
+        <div class="item-desc">Smoky grilled chicken with signature sauce, wrapped and served fresh.</div>
+        <div class="item-footer"><span class="item-price">Rs 680</span><span class="item-badge badge-fan">⭐ Grilled</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="wraps">
+        <span class="item-emoji">🌯</span>
+        <div class="item-name">Tortilla Wrap</div>
+        <div class="item-desc">Classic tortilla stuffed with seasoned chicken, greens and creamy sauce.</div>
+        <div class="item-footer"><span class="item-price">Rs 650</span><span class="item-badge badge-new">✦ Classic</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="wraps">
+        <span class="item-emoji">🫓</span>
+        <div class="item-name">Zinger Paratha Roll</div>
+        <div class="item-desc">Crunchy zinger chicken wrapped in a crispy desi paratha — a local favourite.</div>
+        <div class="item-footer"><span class="item-price">Rs 440</span><span class="item-badge badge-hot">🔥 Desi</span></div>
+      </div>
+      <div class="menu-item reveal" data-cat="wraps">
+        <span class="item-emoji">🫓</span>
+        <div class="item-name">Chicken Paratha Roll</div>
+        <div class="item-desc">Tender chicken filling rolled in a flaky paratha — comfort food at its best.</div>
+        <div class="item-footer"><span class="item-price">Rs 440</span><span class="item-badge badge-fan">⭐ Comfort</span></div>
+      </div>
+    </div>
+
+    <!-- DEALS -->
+    <div class="menu-category-label reveal" data-cat-label="deals">🔥 24 HOURS DEALS</div>
+    <div class="menu-grid" id="menu-grid-deals">
+      <div class="menu-item menu-item-deal reveal" data-cat="deals">
+        <div class="deal-tag">Deal 4</div>
+        <div class="item-name">Pizza & Zingster Combo</div>
+        <div class="item-desc">1 Med Pizza (Old School) + 1 Zingster + Liter Drink or 2 Mint</div>
+        <div class="item-footer"><span class="item-price deal-price">Rs 1,640</span><span class="item-badge badge-hot">🔥 Value</span></div>
+      </div>
+      <div class="menu-item menu-item-deal reveal reveal-delay-1" data-cat="deals">
+        <div class="deal-tag">Deal 5</div>
+        <div class="item-name">Large Pizza Family</div>
+        <div class="item-desc">1 Large Pizza (Old School) + 2 Zingster + Litre Drink or 2 Mint</div>
+        <div class="item-footer"><span class="item-price deal-price">Rs 2,250</span><span class="item-badge badge-fan">⭐ Family</span></div>
+      </div>
+      <div class="menu-item menu-item-deal reveal reveal-delay-2" data-cat="deals">
+        <div class="deal-tag">Deal 6</div>
+        <div class="item-name">Pizza + Platter Combo</div>
+        <div class="item-desc">1 Med Pizza (Old School) + Yumi Special Platter + Litre Drink</div>
+        <div class="item-footer"><span class="item-price deal-price">Rs 1,990</span><span class="item-badge badge-new">✦ Special</span></div>
+      </div>
+      <div class="menu-item menu-item-deal reveal reveal-delay-3" data-cat="deals">
+        <div class="deal-tag">Deal 7</div>
+        <div class="item-name">Wings & Double Pizza</div>
+        <div class="item-desc">Large Pizza + Med Pizza (Old School) + 10 Crispy Wings + 1.5 Drink</div>
+        <div class="item-footer"><span class="item-price deal-price">Rs 3,290</span><span class="item-badge badge-hot">🔥 Big Deal</span></div>
+      </div>
+      <div class="menu-item menu-item-deal reveal" data-cat="deals">
+        <div class="deal-tag">Deal 8</div>
+        <div class="item-name">XL Party Deal</div>
+        <div class="item-desc">XL Pizza (Old School) + 3 Zingster + 3 Fried Chicken + 1 Loaded Fries + 1.5L Drink</div>
+        <div class="item-footer"><span class="item-price deal-price">Rs 4,990</span><span class="item-badge badge-fan">⭐ Party!</span></div>
+      </div>
+      <div class="menu-item menu-item-deal reveal reveal-delay-1" data-cat="deals">
+        <div class="deal-tag">Burger Deal 1</div>
+        <div class="item-name">Zingster Solo</div>
+        <div class="item-desc">1 Zingster + Fries or Chicken + 1 Regular Drink or Mint</div>
+        <div class="item-footer"><span class="item-price deal-price">Rs 740</span><span class="item-badge badge-hot">🔥 Solo</span></div>
+      </div>
+      <div class="menu-item menu-item-deal reveal reveal-delay-2" data-cat="deals">
+        <div class="deal-tag">Burger Deal 2</div>
+        <div class="item-name">Double Zingster</div>
+        <div class="item-desc">2 Zingster + 2 Regular or 2 Mint</div>
+        <div class="item-footer"><span class="item-price deal-price">Rs 1,050</span><span class="item-badge badge-fan">⭐ Double</span></div>
+      </div>
+      <div class="menu-item menu-item-deal reveal reveal-delay-3" data-cat="deals">
+        <div class="deal-tag">Burger Deal 3</div>
+        <div class="item-name">Mighty Combo</div>
+        <div class="item-desc">2 Mighty Zingster + Liter Drink or 2 Mint</div>
+        <div class="item-footer"><span class="item-price deal-price">Rs 1,440</span><span class="item-badge badge-new">✦ Mighty</span></div>
+      </div>
+    </div>
+
+    <!-- PIZZA DEALS BOX -->
+    <div class="menu-category-label reveal" data-cat-label="deals">🍕 24 HOURS PIZZA DEALS</div>
+    <div class="pizza-deals-grid reveal">
+      <div class="pizza-deal-box">
+        <div class="pd-title">Any Old School Flavours</div>
+        <div class="pd-row"><span>2 Medium Pizza</span><span>Rs 1,950</span></div>
+        <div class="pd-row"><span>2 Large Pizza</span><span>Rs 2,650</span></div>
+        <div class="pd-row"><span>2 X-Large Pizza</span><span>Rs 4,150</span></div>
+      </div>
+      <div class="pizza-deal-box">
+        <div class="pd-title">Any Blockbuster Flavours</div>
+        <div class="pd-row"><span>2 Medium Pizza</span><span>Rs 2,150</span></div>
+        <div class="pd-row"><span>2 Large Pizza</span><span>Rs 3,150</span></div>
+        <div class="pd-row"><span>2 X-Large Pizza</span><span>Rs 4,550</span></div>
+      </div>
+    </div>
+
+    <!-- DRINKS -->
+    <div class="menu-category-label reveal" data-cat-label="drinks">🥤 BEVERAGES</div>
+    <div class="menu-grid" id="menu-grid-drinks">
+      <div class="menu-item reveal" data-cat="drinks">
+        <span class="item-emoji">🍹</span>
+        <div class="item-name">Mint Margarita <span style="font-size:0.6rem;color:var(--gold);">NEW</span></div>
+        <div class="item-desc">Refreshing mint margarita — the perfect cool-down after a spicy meal.</div>
+        <div class="item-footer"><span class="item-price">Rs 250</span><span class="item-badge badge-new">✨ New</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="drinks">
+        <span class="item-emoji">🍋</span>
+        <div class="item-name">Fresh Lime <span style="font-size:0.6rem;color:var(--gold);">NEW</span></div>
+        <div class="item-desc">Freshly squeezed lime drink — zesty, light and totally refreshing.</div>
+        <div class="item-footer"><span class="item-price">Rs 180</span><span class="item-badge badge-new">✨ New</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="drinks">
+        <span class="item-emoji">🥤</span>
+        <div class="item-name">Regular Drink</div>
+        <div class="item-desc">Your standard soft drink to pair with any meal.</div>
+        <div class="item-footer"><span class="item-price">Rs 90</span><span class="item-badge badge-fan">⭐ Classic</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="drinks">
+        <span class="item-emoji">🥤</span>
+        <div class="item-name">Tin Pack</div>
+        <div class="item-desc">Chilled canned drink — convenient and cold.</div>
+        <div class="item-footer"><span class="item-price">Rs 120</span><span class="item-badge badge-fan">⭐ Canned</span></div>
+      </div>
+      <div class="menu-item reveal" data-cat="drinks">
+        <span class="item-emoji">🍶</span>
+        <div class="item-name">1 Liter Drink</div>
+        <div class="item-desc">Large bottle — perfect for sharing with your meal deal.</div>
+        <div class="item-footer"><span class="item-price">Rs 180</span><span class="item-badge badge-hot">🔥 Sharing</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-1" data-cat="drinks">
+        <span class="item-emoji">🍶</span>
+        <div class="item-name">1.5 Liter Drink</div>
+        <div class="item-desc">Extra large bottle for the whole group.</div>
+        <div class="item-footer"><span class="item-price">Rs 230</span><span class="item-badge badge-fan">⭐ Family</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-2" data-cat="drinks">
+        <span class="item-emoji">💧</span>
+        <div class="item-name">Small Water</div>
+        <div class="item-desc">Fresh, chilled small water bottle.</div>
+        <div class="item-footer"><span class="item-price">Rs 60</span><span class="item-badge badge-fan">⭐ Water</span></div>
+      </div>
+      <div class="menu-item reveal reveal-delay-3" data-cat="drinks">
+        <span class="item-emoji">💧</span>
+        <div class="item-name">Large Water</div>
+        <div class="item-desc">Full-size water bottle — stay hydrated!</div>
+        <div class="item-footer"><span class="item-price">Rs 120</span><span class="item-badge badge-fan">⭐ Water</span></div>
+      </div>
+    </div>
+
+    <!-- ADD-ONS -->
+    <div class="menu-category-label reveal">➕ ADD-ONS & EXTRAS</div>
+    <div class="addons-grid reveal">
+      <div class="addon-section">
+        <div class="addon-title">🧀 Stuffing</div>
+        <div class="addon-row"><span>Cheese</span><span>Med Rs 270 · Lg Rs 370 · XL Rs 470</span></div>
+        <div class="addon-row"><span>Kabab</span><span>Med Rs 270 · Lg Rs 370 · XL Rs 470</span></div>
+      </div>
+      <div class="addon-section">
+        <div class="addon-title">🍗 More Topping</div>
+        <div class="addon-row"><span>Cheese Topping</span><span>Sm Rs 100 · Med Rs 150 · Lg Rs 300 · XL Rs 350</span></div>
+        <div class="addon-row"><span>Chicken Topping</span><span>Sm Rs 80 · Med Rs 100 · Lg Rs 200 · XL Rs 250</span></div>
+      </div>
+      <div class="addon-section">
+        <div class="addon-title">🥫 Dip Sauces — Rs 100 each</div>
+        <div class="addon-row"><span>Garlic Sauce</span><span>Rs 100</span></div>
+        <div class="addon-row"><span>Chipotle</span><span>Rs 100</span></div>
+        <div class="addon-row"><span>Yumilicious Special Sauce</span><span>Rs 100</span></div>
+        <div class="addon-row"><span>Fiery Sauce</span><span>Rs 100</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-inner">
+    <div class="reveal" style="margin-bottom:3.5rem;">
+      <span class="section-tag">What People Say</span>
+      <h2 class="section-title">Real Reviews,<br><em>Real Flavour</em></h2>
+    </div>
+    <div class="reviews-header-grid">
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Loaded Fries just made for us — awesome taste and experience. The flavours are 9/10 easily. One of the best spots in People's Colony!"</p>
+          <div class="review-author">
+            <div class="author-avatar">SM</div>
+            <div>
+              <div class="author-name">Shahbaz Malik</div>
+              <div class="author-meta">Local Guide · 133 reviews · 6 months ago</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal reveal-delay-1">
+          <div class="review-stars">★★★★☆</div>
+          <p class="review-text">"The environment was nice and welcoming, service was fast. The X-Large Fajita pizza was well-cooked and truly tasty. Will definitely return!"</p>
+          <div class="review-author">
+            <div class="author-avatar">AR</div>
+            <div>
+              <div class="author-name">Abdulrehman Rajput</div>
+              <div class="author-meta">Local Guide · 23 reviews · 8 months ago</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal reveal-delay-2">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Malai Boti Pizza — full of cheesy, creamy goodness. The grill burger was too much tender and juicy. I highly recommend going to Yumilicious!"</p>
+          <div class="review-author">
+            <div class="author-avatar">MK</div>
+            <div>
+              <div class="author-name">Mudassar Khalid</div>
+              <div class="author-meta">Verified Customer · 3 months ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="review-rating-bar reveal">
+        <div class="big-rating">4.5</div>
+        <div class="rating-label">Based on 299 reviews</div>
+        <div class="rating-row"><span class="rating-num">5</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:72%"></div></div><span class="rating-count">215</span></div>
+        <div class="rating-row"><span class="rating-num">4</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:18%"></div></div><span class="rating-count">54</span></div>
+        <div class="rating-row"><span class="rating-num">3</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:6%"></div></div><span class="rating-count">18</span></div>
+        <div class="rating-row"><span class="rating-num">2</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:2%"></div></div><span class="rating-count">6</span></div>
+        <div class="rating-row"><span class="rating-num">1</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:2%"></div></div><span class="rating-count">6</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="section-inner">
+    <div class="location-grid">
+      <div>
+        <span class="section-tag reveal">Find Us</span>
+        <h2 class="section-title reveal">Visit Us in<br><em>People's Colony</em></h2>
+        <div class="divider reveal"></div>
+        <div class="location-info" style="margin-top: 2rem;">
+          <div class="loc-item reveal">
+            <div class="loc-icon">📍</div>
+            <div>
+              <div class="loc-label">Address</div>
+              <div class="loc-value">46Q3+7JP, Sector X, Peoples Colony<br>Gujranwala, Punjab, Pakistan</div>
+            </div>
+          </div>
+          <div class="loc-item reveal reveal-delay-1">
+            <div class="loc-icon">🕐</div>
+            <div>
+              <div class="loc-label">Opening Hours</div>
+              <div class="loc-value">Opens at 3:00 PM Daily<br>Closed during morning hours</div>
+            </div>
+          </div>
+          <div class="loc-item reveal reveal-delay-2">
+            <div class="loc-icon">📞</div>
+            <div>
+              <div class="loc-label">Phone</div>
+              <div class="loc-value"><a href="tel:+923160490499">+92 316 0490499</a></div>
+            </div>
+          </div>
+          <div class="loc-item reveal reveal-delay-3">
+            <div class="loc-icon">🌐</div>
+            <div>
+              <div class="loc-label">Facebook</div>
+              <div class="loc-value"><a href="https://facebook.com" target="_blank">facebook.com/Yumilicious</a></div>
+            </div>
+          </div>
+          <div class="loc-item reveal">
+            <div class="loc-icon">🛵</div>
+            <div>
+              <div class="loc-label">Options</div>
+              <div class="loc-value">Dine-in · Takeout · Delivery</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="map-placeholder reveal">
+        <div class="map-pin">📍</div>
+        <div class="map-text">Sector X, Peoples Colony<br>Gujranwala, Pakistan</div>
+        <a href="https://maps.google.com/?q=46Q3+7JP,+Peoples+Colony,+Gujranwala,+Pakistan" target="_blank" class="map-open-btn">Open in Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">Yumilicious</div>
+        <p>Gujranwala's go-to fast food destination. Serving joy, one bite at a time, in the heart of People's Colony.</p>
+        <div class="footer-social">
+          <a href="https://facebook.com" target="_blank" class="social-btn">fb</a>
+          <a href="tel:+923160490499" class="social-btn">☎</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Menu</h4>
+        <ul>
+          <li><a href="#menu">Pizzas</a></li>
+          <li><a href="#menu">Burgers</a></li>
+          <li><a href="#menu">Wraps</a></li>
+          <li><a href="#menu">Fries & Sides</a></li>
+          <li><a href="#menu">Wings</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="#about">Our Story</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#location">Location</a></li>
+          <li><a href="tel:+923160490499">Call Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li><a href="#">Opens 3 PM</a></li>
+          <li><a href="#">Dine-in</a></li>
+          <li><a href="#">Takeout</a></li>
+          <li><a href="#">Delivery</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Yumilicious. People's Colony, Gujranwala, Pakistan.</div>
+      <div class="footer-made">Made with <span>♥</span> for food lovers</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ORDER FLOAT -->
+<a href="tel:+923160490499" class="order-float" id="orderFloat">
+  <span class="order-float-btn">📞 Order Now</span>
+</a>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+function animateRing() { rx += (mx-rx)*0.12; ry += (my-ry)*0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animateRing); }
+animateRing();
+document.querySelectorAll('a, button, .filter-btn, .menu-item').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.2)'; cursor.style.background = '#fff'; ring.style.opacity = '0'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; cursor.style.background = 'var(--gold)'; ring.style.opacity = '1'; });
+});
+
+// Nav scroll
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('orderFloat').classList.toggle('visible', window.scrollY > 400);
+});
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+revealEls.forEach(el => io.observe(el));
+
+// Menu filter
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.menu-item').forEach(item => {
+    const show = cat === 'all' || item.dataset.cat === cat;
+    item.style.display = show ? 'block' : 'none';
+  });
+  document.querySelectorAll('.menu-category-label, .pizza-sizes-bar').forEach(el => {
+    const lbl = el.dataset.catLabel;
+    el.style.display = (cat === 'all' || !lbl || lbl === cat) ? 'block' : 'none';
+  });
+  document.querySelectorAll('.pizza-deals-grid, .addons-grid').forEach(el => {
+    el.style.display = (cat === 'all' || cat === 'deals' || cat === 'sides') ? 'grid' : 'none';
+  });
+}
+</script>
 </body>
-</html> 
+</html>
